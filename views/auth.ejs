@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/auth.css">
+	<title>Authentication</title>
+</head>
+
+<body>
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+		<title>Slide Navbar</title>
+		<link rel="stylesheet" type="text/css" href="slide navbar style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="error_div">
+			<% if( error !="" ){ %>
+				<div class="error" role="alert">
+					<strong> Error </strong>
+					<%= error %>
+						<button type="button" onclick="document.getElementsByClassName('error')[0].remove()"
+							class="btn-close">x</button>
+				</div>
+				<% } %>
+					<% if( error_messages !="" ){ %>
+						<div class="error" role="alert">
+							<strong> Error </strong>
+							<%= error_messages %>
+								<button type="button" onclick="document.getElementsByClassName('error')[0].remove()"
+									class="btn-close">x</button>
+						</div>
+						<% } %>
+		</div>
+		<div class="main">
+			<input type="checkbox" id="chk" aria-hidden="true">
+			<div class="signup">
+				<form action="/signup" method="post">
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="username" placeholder="User name" required>
+					<input type="email" name="email" placeholder="Email" required>
+					<input type="password" name="password" placeholder="Password" required>
+					<button>Sign up</button>
+				</form>
+				<a href="/google"><button style="background-color: red;" type="submit" >Google</button></a>
+			</div>
+
+			<div class="login">
+				<form action="/login" method="post">
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" name="email" placeholder="Email" required>
+					<input type="password" name="password" placeholder="Password" required>
+					<button>Login</button>
+				</form>
+				<a href="/google"><button style="background-color: red;" type="submit" >Google</button></a>
+			</div>
+		</div>
+	</body>
+<script>
+	// window.onload = ()=>{
+	// 	let mode = document.getElementsByClassName('mode_ele')[0].innerHTML;
+	// 	if(mode=='login'){
+	// 		document.getElementById('chk').click();
+	// 	}
+	// }
+</script>
+	</html>
+</body>
+
+</html>

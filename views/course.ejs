@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <title>Cyborg - Awesome HTML5 Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href=" css/fontawesome.css">
+  <link rel="stylesheet" href=" css/templatemo-cyborg-gaming.css">
+  <link rel="stylesheet" href=" css/owl.css">
+  <link rel="stylesheet" href=" css/animate.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+  <!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+</head>
+
+<body>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="index.html" class="logo">
+              <img src=" images/logo.png" alt="">
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Search End ***** -->
+            <div class="search-input">
+              <form id="search" action="#">
+                <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword"
+                  onkeypress="handle" />
+                <i class="fa fa-search"></i>
+              </form>
+            </div>
+            <!-- ***** Search End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li><a href="/" class="active">Home</a></li>
+              <li><a href="/course">Course</a></li>
+              <li><a href="/profile">Profile <img src= '<%=userprofile%>' alt=""></a></li>
+            </ul>
+            <a class='menu-trigger'>
+              <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+
+          <!-- ***** Featured Games Start ***** -->
+
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="featured-games header-text">
+                <div class="heading-section">
+                  <h4><em>Featured</em> Course</h4>
+                </div>
+                <div class="owl-features owl-carousel" id="feature">
+                  
+                
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="top-downloaded">
+                <div class="heading-section">
+                  <h4><em>Top</em> Rated</h4>
+                </div>
+                <ul id="topRatingGig">
+          
+                </ul>
+                <div class="text-button">
+                  <a onclick="loadAllCourse()">View All Games</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ***** Live Stream Start ***** --> -->
+          <!-- <div class="live-stream">
+            <div class="col-lg-12">
+              <div class="heading-section">
+                <h4><em>Most Popular</em>Course</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-sm-6">
+                <div class="item">
+                  <div class="thumb">
+                    <img src=" images/stream-01.jpg" alt="">
+                    <div class="hover-effect">
+                      <div class="content">
+                        <div class="live">
+                          <a href="#">Live</a>
+                        </div>
+                        <ul>
+                          <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
+                          <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="down-content">
+                    <div class="avatar">
+                      <img src=" images/avatar-01.jpg" alt=""
+                        style="max-width: 46px; border-radius: 50%; float: left;">
+                    </div>
+                    <span><i class="fa fa-check"></i> KenganC</span>
+                    <h4>Just Talking With Fans</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6">
+                <div class="item">
+                  <div class="thumb">
+                    <img src=" images/stream-02.jpg" alt="">
+                    <div class="hover-effect">
+                      <div class="content">
+                        <div class="live">
+                          <a href="#">Live</a>
+                        </div>
+                        <ul>
+                          <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
+                          <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="down-content">
+                    <div class="avatar">
+                      <img src=" images/avatar-02.jpg" alt=""
+                        style="max-width: 46px; border-radius: 50%; float: left;">
+                    </div>
+                    <span><i class="fa fa-check"></i> LunaMa</span>
+                    <h4>CS-GO 36 Hours Live Stream</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6">
+                <div class="item">
+                  <div class="thumb">
+                    <img src=" images/stream-03.jpg" alt="">
+                    <div class="hover-effect">
+                      <div class="content">
+                        <div class="live">
+                          <a href="#">Live</a>
+                        </div>
+                        <ul>
+                          <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
+                          <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="down-content">
+                    <div class="avatar">
+                      <img src=" images/avatar-03.jpg" alt=""
+                        style="max-width: 46px; border-radius: 50%; float: left;">
+                    </div>
+                    <span><i class="fa fa-check"></i> Areluwa</span>
+                    <h4>Maybe Nathej Allnight Chillin'</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6">
+                <div class="item">
+                  <div class="thumb">
+                    <img src=" images/stream-04.jpg" alt="">
+                    <div class="hover-effect">
+                      <div class="content">
+                        <div class="live">
+                          <a href="#">Live</a>
+                        </div>
+                        <ul>
+                          <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
+                          <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="down-content">
+                    <div class="avatar">
+                      <img src=" images/avatar-04.jpg" alt=""
+                        style="max-width: 46px; border-radius: 50%; float: left;">
+                    </div>
+                    <span><i class="fa fa-check"></i> GangTm</span>
+                    <h4>Live Streaming Till Morning</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="main-button">
+                  <a href="streams.html">Discover All Streams</a>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- <!-- ***** Live Stream End ***** -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright ©<a href="#">TEAM_NAME</a> Company. All rights reserved.
+            <br>
+            Contact Us :
+            <!-- add social media links here -->
+            <i class="fa-brands fa-instagram fa-beat fa-lg " style="color: #da17de; padding: 0px 5px 0px 30px;"></i>
+            <i class="fa-brands fa-facebook fa-beat fa-lg" style="color: #3b5998; padding: 0px 5px;"></i>
+            <i class="fa-brands fa-twitter fa-beat fa-lg" style="color: #1da1f2; padding: 0px 5px;"></i>
+            <i class="fa-brands fa-linkedin fa-beat fa-lg" style="color: #0077b5; padding: 0px 5px;"></i>
+            <i class="fa-brands fa-discord fa-beat fa-lg" style="color: #7289da; padding: 0px 30px 0px 5px"></i>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src=" js/isotope.min.js"></script>
+  <script src=" js/owl-carousel.js"></script>
+  <script src=" js/tabs.js"></script>
+  <script src=" js/popup.js"></script>
+  <script src=" js/custom.js"></script>
+  <script src="js/course.js"></script>
+
+
+</body>
+
+</html>

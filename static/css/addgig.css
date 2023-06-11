@@ -1,0 +1,125 @@
+
+.tags {
+	font-size: 15px;
+	padding: 5px;
+	margin: 10px;
+	background-color: rgb(238, 238, 238);
+	border: 1px solid black;
+	border-radius: 5px;
+	color: black;
+	display: inline-block;
+}
+
+.selected {
+	background-color: rgb(34, 97, 255);
+	color: white;
+}
+
+.heading {
+	font-size: 30px;
+	width: 100%;
+	color: white;
+	text-align: center;
+	padding: 20px;
+	margin-top: 80px;
+}
+
+.addCourse_container {
+	margin: auto;
+	width: 60%;
+}
+
+.images {
+	height: 200px;
+	width: max-content;
+}
+
+.img {
+	display: inline-block;
+	height: 100%;
+	width: 150px;
+	padding: 0 10px;
+	position: relative;
+}
+
+.img img,
+.img svg {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	border-radius: 6px;
+}
+
+.img svg {
+	color: white;
+}
+
+.first-img {
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+.img-container {
+	width: 100%;
+	overflow-x: auto;
+	margin: 10px 0;
+}
+
+.img-container::-webkit-scrollbar {
+	display: none;
+}
+
+.img span {
+	position: absolute;
+	right: 17px;
+	color: white;
+	font-size: 14px;
+}
+
+.circle {
+	display: inline;
+}
+
+.price_container {
+	font-size: 20px;
+	color: white;
+}
+
+.price_container span {
+	color: red;
+	font-size: 7px;
+}
+
+.price_container input {
+	margin: 20px;
+	width: 120px;
+	border: none;
+	border-radius: 5px;
+	/* font-size: 15px; */
+	outline: none;
+	padding-left: 11px;
+}
+
+.tag_container{
+	color:white;
+	margin: 20px 0;
+}
+.tag_heading{
+	font-size: 20px;
+    text-transform: capitalize;
+}
+.tag_constrain{
+	color:red;
+	font-size: 7px;
+}
+#desc{
+	width: 90%;
+	height: 70px;
+}
+.desc{
+	margin: 20px 0;
+}
+#sub_btn{
+	margin-bottom: 20px;
+	background-color: greenyellow;
+}

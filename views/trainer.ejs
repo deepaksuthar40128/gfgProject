@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<title>Trainer</title>
+
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+		integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+		<link rel="stylesheet" href="/css/trainer.css">
+</head>
+
+<body>
+	<div class="trainer_box">
+	<% if( error !="" ){ %>
+	<div class="error" role="alert">
+		<strong> Error </strong>
+		<%= error %>
+			<button type="button" onclick="document.getElementsByClassName('error')[0].remove()"
+				class="btn-close">x</button>
+	</div>
+	<% } %>
+		<% if( error_messages !="" ){ %>
+			<div class="error" role="alert">
+				<strong> Error </strong>
+				<%= error_messages %>
+					<button type="button" onclick="document.getElementsByClassName('error')[0].remove()"
+						class="btn-close">x</button>
+			</div>
+			<% } %>
+	
+		
+		<form action="/trainer/register" method="post" enctype="multipart/form-data">
+			<h1>ADD YOURSELF ON MY WEB</h1>
+			<div class="icon">
+				<label for="image">
+					<i class="fas fa-user-circle"></i>
+				</label>
+			</div>
+			<div class="formcontainer">
+				<div class="container">
+					<label for="experiance"><strong>Experiance</strong></label>
+					<input type="text" placeholder="Enter Experiance" name="experiance" required>
+					<label for="speslity"><strong>Speslity</strong></label>
+					<input type="text" placeholder="Enter speslity" name="speslity" required>
+					<label for="achivement"><strong>Achivement</strong></label>
+					<input type="text" placeholder="Enter Achivement" name="achivement" required>
+					<label for="phone"><strong>Phone</strong></label>
+					<input type="number" placeholder="Enter Phone" name="phone" required>
+					<label for="medical"><strong>Medical</strong></label>
+					<input type="text" placeholder="Enter Medical" name="medical" required>
+					<input type="file" name="image" id="image" style="display: none;">
+				</div>
+				<button type="submit"><strong>Register</strong></button>
+				<div class="container" style="background-color: #eee">
+					<span class="psw"><a href="#">Forgot password?</a></span>
+				</div>
+		</form>
+	</div>
+	<script src="/js/trainer.js"></script>
+</body>
+
+</html>

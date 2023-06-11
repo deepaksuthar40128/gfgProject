@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/addgig.css">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href=" css/fontawesome.css">
+	<link rel="stylesheet" href=" css/templatemo-cyborg-gaming.css">
+	<link rel="stylesheet" href=" css/owl.css">
+	<link rel="stylesheet" href=" css/animate.css">
+	<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+	<link rel="stylesheet" href=" css/index.css">
+	<title>Add Gig</title>
+</head>
+
+<body>
+	<div id="js-preloader" class="js-preloader">
+		<div class="preloader-inner">
+			<span class="dot"></span>
+			<div class="dots">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+	</div>
+	<!-- ***** Preloader End ***** -->
+
+	<!-- ***** Header Area Start ***** -->
+	<header class="header-area header-sticky">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav class="main-nav">
+						<!-- ***** Logo Start ***** -->
+						<a href="index.html" class="logo">
+							<img src=" images/logo.png" alt="">
+						</a>
+						<!-- ***** Logo End ***** -->
+						<!-- ***** Search End ***** -->
+						<div class="search-input">
+							<form id="search" action="#">
+								<input type="text" placeholder="Type Something" id='searchText' name="searchKeyword"
+									onkeypress="handle" />
+								<i class="fa fa-search"></i>
+							</form>
+						</div>
+						<!-- ***** Search End ***** -->
+						<!-- ***** Menu Start ***** -->
+						<ul class="nav">
+							<li><a href="#" class="active">Home</a></li>
+							<li><a href="#">Browse</a></li>
+							<li><a href="#">Details</a></li>
+							<li><a href="#">Streams</a></li>
+							<li><a href="">Streams</a></li>
+							<li><a href="#">Profile <img src='' alt=""></a></li>
+						</ul>
+						<a class='menu-trigger'>
+							<span>Menu</span>
+						</a>
+						<!-- ***** Menu End ***** -->
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="heading">Add Gig</div>
+
+	<div class="addCourse">
+		<div class="addCourse_container">
+			<form action="/addgig" method="post" id="myform" enctype="multipart/form-data">
+				<input type="file" name="photos" id="photos" multiple>
+				<div class="img-container">
+					<div class="images">
+						<div class="img first-img">
+							<svg onclick="load_img()" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+								fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+								<path
+									d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
+								<path
+									d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+							</svg>
+						</div>
+					</div>
+				</div>
+				<div class="price_container">
+					<label for="name">Name of Gig </label>
+					<input type="text" name="name" placeholder="Name" id="name">
+				</div>
+				<div class="price_container">
+					<label for="price">Price <span>(*input as Doller)</span> </label>
+					<input type="number" name="price" placeholder="price" id="">
+				</div>
+				<input type="text" name="tags" id="tags" hidden value="">
+				<div class="tag_container">
+					<div class="tag_heading">Choose Tags which fits Your Gig</div>
+					<div class="tag_constrain">*max choose 5</div>
+					<div class="tages">
+						<div class="tags">ABS</div>
+						<div class="tags">Full Body</div>
+						<div class="tags">Working</div>
+						<div class="tags">Chest</div>
+						<div class="tags">Legs</div>
+						<div class="tags">Upper Part</div>
+						<div class="tags">Lower Part</div>
+						<div class="tags">Shoulder</div>
+						<div class="tags">Home</div>
+						<div class="tags">GYM</div>
+						<div class="tags">Weignt Loose</div>
+						<div class="tags">Weight Gain</div>
+						<div class="tags">Push Ups</div>
+						<div class="tags">Over All</div>
+						<div class="tags">Lower Part</div>
+						<div class="tags">Weignt Loose</div>
+						<div class="tags">Weignt Loose</div>
+						<div class="tags">ABS</div>
+						<div class="tags">ABS</div>
+						<div class="tags">Weignt Loose</div>
+					</div>
+				</div>
+				<div class="desc">
+					<div class="tag_heading" style="color:white">Write Features you offers</div>
+					<div class="tag_constrain">*Max letters 200</div>
+					<textarea name="desc" id="desc" cols="30" rows="10"></textarea>
+				</div>
+				<button type="submit" id="sub_btn">submit</button>
+			</form>
+		</div>
+	</div>
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<script src="js/isotope.min.js"></script>
+	<script src="js/owl-carousel.js"></script>
+	<script src="js/tabs.js"></script>
+	<script src="js/popup.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/addgig.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+html,
+body {
+	display: flex;
+	justify-content: center;
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 15px;
+}
+
+.trainer_box {
+	margin: auto;
+	width: 50%;
+}
+
+form {
+	border: 5px solid #f1f1f1;
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number],
+input[type="file"] {
+	width: 100%;
+	padding: 16px 8px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	border-radius: 5px;
+}
+
+.icon {
+	font-size: 110px;
+	display: flex;
+	justify-content: center;
+	color: #4286f4;
+}
+
+button {
+	background-color: #4286f4;
+	color: white;
+	padding: 14px 0;
+	margin: 10px 0;
+	border: none;
+	cursor: grab;
+	width: 48%;
+}
+
+h1 {
+	text-align: center;
+	font-size: 18px;
+}
+
+button:hover {
+	opacity: 0.8;
+}
+
+.formcontainer {
+	text-align: center;
+	margin: 24px 50px 12px;
+}
+
+.container {
+	padding: 16px 0;
+	text-align: left;
+}
+
+span.psw {
+	float: right;
+	padding-top: 0;
+	padding-right: 15px;
+}
+
+/* Change styles for span on extra small screens */
+@media screen and (max-width: 300px) {
+	span.psw {
+		display: block;
+		float: none;
+	}
+}
+
+.icon img {
+	width: 100%;
+	object-fit: cover;
+	height: 100%;
+}
+
+.icon label {
+	width: 110px;
+	height: 110px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+.error {
+	width: 90%;
+	padding: 10px;
+	margin: 10px auto;
+	background-color: rgb(222, 101, 77);
+	border-radius: 5px;
+	color: white;
+}
+
+.error button {
+	float: right;
+	width: 19px;
+	background: transparent;
+	border: none;
+	color: white;
+	font-size: 20px;
+}
