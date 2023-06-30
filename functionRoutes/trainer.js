@@ -2,12 +2,9 @@ const express = require('express');
 const Trainer = require('../model/trainer.js')
 const Gig = require('../model/gigs.js')
 const app = express();
-const multer = require('multer')
-const multerS3 = require('multer-s3')
-const AWS = require('aws-sdk')
+const multer = require('multer');
 const gigs = require('../model/gigs.js');
 const undirectedRoutes = require('./undirectedRoutes.js');
-const trainer = require('../model/trainer.js');
 const user = require('../model/user.js');
 function checkAuth(req, res, next) {
 	if (req.isAuthenticated()) {
@@ -19,22 +16,15 @@ function checkAuth(req, res, next) {
 	}
 }
 
-const s3 = new AWS.S3({
-	accessKeyId: process.env.AWSKEY,
-	secretAccessKey: process.env.AWSPASSWORD,
-	region: 'us-west-2'
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "./static/uploads");
+	},
+	filename: function (req, file, cb) {
+		cb(null, `gfg${Date.now() + file.originalname}`);
+	},
 });
-
-const upload = multer({
-	storage: multerS3({
-		s3: s3,
-		bucket: 'mydbms',
-		contentType: multerS3.AUTO_CONTENT_TYPE,
-		key: function (req, file, cb) {
-			cb(null, Date.now().toString() + '-' + file.originalname)
-		}
-	})
-})
+const upload = multer({ storage: storage });
 
 app.post('/addgig', checkAuth, upload.array('photos', 12), async (req, res) => {
 	try {
@@ -44,7 +34,7 @@ app.post('/addgig', checkAuth, upload.array('photos', 12), async (req, res) => {
 		let file_names = [];
 		file_names =
 			files.map((file) => {
-				return file.location
+				return `./uploads/${file.filename}`
 			});
 		let newGig = new gigs({
 			Tags: Tags,
@@ -79,10 +69,16 @@ app.get('/addtrainer', async (req, res) => {
 app.post('/trainer/register', checkAuth, upload.single('image'), async (req, res) => {
 	try {
 		const { experiance, gender, speslity, achivement, medical } = req.body;
+		const usr=await user.findById(req.user._id);
+		if(!usr){
+			res.status(404).json({
+				message:"User not Found"
+			})
+		}
 		const oldTrainer = await Trainer.findOne({ email: req.user.email });
 		if (oldTrainer) {
 			req.flash('error_messages', "You Already a Trainer");
-			return res.redirect('/profile');
+			res.redirect('/profile');
 		}
 		let trainer = new Trainer({
 			email: req.user.email,
@@ -93,16 +89,60 @@ app.post('/trainer/register', checkAuth, upload.single('image'), async (req, res
 			medical: medical,
 		})
 		trainer = await trainer.save();
+		usr.isTrainer=true;
+		await usr.save();
 		await user.findByIdAndUpdate(req.user._id, {
-			profile: req.file.location,
+			profile: `./uploads/${req.file.filename}`
 		});
 		res.redirect('/addgig');
-	} catch (error) { 
-		req.flash('error_messages', "Something wrong from our side!");
-		 res.redirect('/profile');
+	} catch (error) {
+		console.log(error)
+		res.status(500).render(error)
 	}
 })
 
-app.use(undirectedRoutes);
+app.get('/editProfile',async(req,res)=>{
+	try {
+		const usr=await user.findById(req.user._id);
+		if(usr.isTrainer){
+            res.render('editProfile',{Traner:true,person:await Trainer.findOne({email: req.user.email})})
+		}else{
+			res.render('editProfile',{Traner:false,person:req.user});
+		}
+	} catch (error) {
+		console.log(error)
+		res.status(500).render(error)
+	}
+})
 
-module.exports = app;
+app.post('/modifyProfile',upload.single('image'), async (req, res) => {
+	try {
+	  let usr = await user.findById(req.user._id);
+	  if (usr.isTrainer) {
+		let trainer = await Trainer.findOne({ email: req.user.email });
+		await trainer.updateOne({
+		  experiance: req.body.experiance,
+		  speslity: req.body.speslity,
+		  achivement: req.body.achivement,
+		  phone: req.body.phone
+		});
+		await trainer.save();
+		await usr.findByIdAndUpdate(req.user._id, {
+			profile: `./uploads/${req.file.filename}`
+		});
+	  } else {
+		usr.username = req.body.username;
+		usr.profile = `./uploads/${req.file.filename}`;
+		await usr.save();
+	  }
+	  res.redirect('/auth');
+	} catch (error) {
+	  console.log(error);
+	  res.status(500).render('error'); 
+	}
+  });
+  
+  app.use(undirectedRoutes);
+  
+  module.exports = app;
+  

@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
         ref: 'Gigs',
     }],
     Tags: Array,
+    isTrainer:{
+        type:Boolean,
+        default:false,
+    }
 },{ timestamps: true }
 );
 
