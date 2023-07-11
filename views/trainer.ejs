@@ -32,7 +32,7 @@
 		<form action="/trainer/register" method="post" enctype="multipart/form-data">
 			<h1>ADD YOURSELF ON MY WEB</h1>
 			<div class="icon">
-				<label for="file">
+				<label for="image">
 					<i class="fas fa-user-circle"></i>
 				</label>
 			</div>
@@ -40,6 +40,8 @@
 				<div class="container">
 					<label for="experiance"><strong>Experiance</strong></label>
 					<input type="text" placeholder="Enter Experiance" name="experiance" required>
+					<label for="username"><strong>username</strong></label>
+					<input type="text" placeholder="Enter UserName" name="username" required>
 					<label for="speslity"><strong>Speslity</strong></label>
 					<input type="text" placeholder="Enter speslity" name="speslity" required>
 					<label for="achivement"><strong>Achivement</strong></label>
@@ -48,7 +50,7 @@
 					<input type="number" placeholder="Enter Phone" name="phone" required>
 					<label for="medical"><strong>Medical</strong></label>
 					<input type="text" placeholder="Enter Medical" name="medical" required>
-					<input type="file" name="file" id="image" style="display: none;">
+					<input type="file" name="image" id="image" required style="display: none;">
 				</div>
 				<button type="submit"><strong>Register</strong></button>
 				<div class="container" style="background-color: #eee">

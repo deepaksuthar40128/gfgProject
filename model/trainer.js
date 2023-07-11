@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const trainder = new mongoose.Schema({
     email: String,
+    username: String,
     experiance: String,
     rating: Number,
     NumberRates: Number,
     gender: String,
-    speslity:String,
+    speslity: String,
     achivement: String,
-    phone:Number,
+    phone: Number,
     Gigs: [{
         type: Schema.Types.ObjectId,
         ref: 'Gigs'

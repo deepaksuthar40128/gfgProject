@@ -2,6 +2,7 @@ const express = require("express");
 const Gigs = require("../model/gigs");
 const trainer = require("../model/trainer");
 const user = require("../model/user");
+const mongoose = require("mongoose");
 const app = express();
 
 function checkAuth(req, res, next) {
@@ -52,6 +53,7 @@ app.get('/alluserGigs', checkAuth, async (req, res) => {
 		]);
 		res.status(200).json(data);
 	} catch (err) {
+		console.log(err);
 		res.status(500).json(err);
 	}
 })
@@ -78,8 +80,7 @@ app.get('/details/:id', checkAuth, async (req, res) => {
 		res.status(200).json(data);
 	} catch (err) {
 		console.log(err);
-
-		res.send(err);
+		res.status(500).send(err);
 	}
 })
 
@@ -159,7 +160,7 @@ app.post('/rating/:id', async (req, res) => {
 		gig.NumberRates = prevNumRates + 1;
 		gig.save();
 
-		return res.json({ msg: "Hello" });
+		return res.json({ msg: "rating updated" });
 	} catch (error) {
 		console.error(error);
 		return res.status(500).json({ error: "Internal Server Error" });
@@ -171,9 +172,9 @@ app.get('/gigs', async (req, res) => {
 		let usr = await user.findById(req.user._id);
 		let gigTag = new Set();
 
-		if (usr.gigs === null) {
-			let gig = await Gigs.find();
-			res.status(200).json(gig);
+		if (!usr.gigs.length) {
+			let gig = await Gigs.find().limit(4);
+			return res.status(200).json(gig);
 		} else {
 			await Promise.all(usr.gigs.map(async (item) => {
 				let gig = await Gigs.findById(item);
@@ -232,6 +233,71 @@ app.get('/gigs', async (req, res) => {
 });
 
 
+app.get('/limitedGig', async (req, res) => {
+	try {
+		let usr = await user.findById(req.user._id);
+		let gigTag = new Set();
+
+		if (!usr.gigs.length) {
+			let gig = await Gigs.find().limit(2);
+			return res.status(200).json(gig);
+		} else {
+			await Promise.all(usr.gigs.map(async (item) => {
+				let gig = await Gigs.findById(item);
+				gig.Tags.forEach(element => {
+					gigTag.add(element);
+				});
+			}));
+		}
+
+		gigTag = [...gigTag];
+		data = await Promise.all(gigTag.map(async (tag) => {
+			data2 = await Gigs.aggregate([
+				{
+					$match: {
+						Tags: {
+							$elemMatch: {
+								$eq: tag
+							}
+						}
+					}
+				}, {
+					$project: {
+						_id: 1
+					}
+				}
+			]);
+			return data2;
+		}));
+
+		let nanda = {};
+		data.map(arr => {
+			arr.map(ele => {
+				if (usr.gigs.indexOf(ele._id) == -1) {
+					if (ele._id in nanda) {
+						nanda[ele._id]++;
+					} else {
+						nanda[ele._id] = 1;
+					}
+				}
+			})
+		})
+		let sortable = [];
+		for (let vehicle in nanda) {
+			sortable.push([vehicle]);
+		}
+
+		let filterGig = [];
+		await Promise.all(sortable.map(async (item) => {
+			let gig = await Gigs.findById(item).populate('Trainer');
+			filterGig.push(gig);
+		}));
+		res.json(filterGig);
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 app.get('/courses', async (req, res) => {
 	try {
 		let gigs = await Gigs.aggregate([{
@@ -282,26 +348,29 @@ app.get('/featureGigs', async (req, res) => {
 			])
 			return data2;
 		}))
-
-		let uniquGig = new Set();
+		let uniquGig = [];
 		data.forEach((gig) => {
 			gig.forEach((item) => {
-				uniquGig.add(item);
+				let id = (item._id).toString();
+
+				if (!uniquGig.includes(id)) {
+					uniquGig.push(id);
+				}
 			});
 		});
-		uniquGig = Array.from(uniquGig);
-		console.log(uniquGig);
+		uniquGig = uniquGig.map(element => {
+			return mongoose.Types.ObjectId(element);
+		});
 		uniquGig = uniquGig.filter((gig) => gig !== undefined);
 
 		let overGig = await Promise.all(uniquGig.map(async (item) => {
 			let gig = await Gigs.findById(item);
 			return gig;
-		  }));
-		  
+		}));
+
 
 		overGig = overGig.filter((gig) => gig !== undefined);
 
-		console.log(overGig);
 		res.status(200).json(overGig);
 
 
@@ -310,5 +379,70 @@ app.get('/featureGigs', async (req, res) => {
 		res.status(500).json(error);
 	}
 })
+
+
+app.get('/searchGig/', async (req, res) => {
+	try {
+		let gigs = await Gigs.aggregate([
+			{
+				'$match': {
+					$or: [
+						{
+							'Tags': {
+								'$elemMatch': {
+									'$in': [
+										new RegExp(req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i')
+									]
+								}
+							}
+						},
+						{
+							'Name': "Fortune"
+						}
+					]
+
+				}
+			}, {
+				$project: {
+					"Name": 1
+				}
+			}, {
+				$limit: 10
+			}
+		]).exec();
+		gigs = gigs.map(gig => {
+			return {
+				...gig,
+				type: "gig",
+			}
+		})
+
+		let trainers = await trainer.aggregate([
+			{
+				$match: {
+					"username":new RegExp(req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i')
+				}
+			}, {
+				$project: {
+					"username": 1
+				}
+			}, {
+				$limit: 10
+			}
+		])
+		trainers = trainers.map(tra => {
+			return {
+				...tra,
+				type: "trainer",
+			}
+		})
+		let searchData = [...gigs, ...trainers]
+		res.json(searchData);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json(error);
+	}
+});
+
 
 module.exports = app;

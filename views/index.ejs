@@ -16,25 +16,17 @@
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
-  <!-- Additional CSS Files -->
   <link rel="stylesheet" href=" css/fontawesome.css">
   <link rel="stylesheet" href=" css/templatemo-cyborg-gaming.css">
   <link rel="stylesheet" href=" css/owl.css">
   <link rel="stylesheet" href=" css/animate.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
   <link rel="stylesheet" href=" css/index.css">
-  <!--
-
-TemplateMo 579 Cyborg Gaming
-
-https://templatemo.com/tm-579-cyborg-gaming
-
--->
+  
 </head>
 
 <body>
 
-  <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
       <span class="dot"></span>
@@ -45,9 +37,6 @@ https://templatemo.com/tm-579-cyborg-gaming
       </div>
     </div>
   </div>
-  <!-- ***** Preloader End ***** -->
-
-  <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
     <div class="container">
       <div class="row">
@@ -59,51 +48,44 @@ https://templatemo.com/tm-579-cyborg-gaming
             </a>
             <div class="search-input">
               <form id="search" action="#">
-                <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword"
-                  onkeypress="handle" />
+                <input type="text" onkeyup="this.onchange()" placeholder="Type Something" id='searchText' name="searchKeyword"
+                   autocomplete="off" />
                 <i class="fa fa-search"></i>
+                <div class="Box" id="searchItem" style="color: white;">
+                </div>
               </form>
             </div>
-            <!-- ***** Search End ***** -->
-            <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li><a href="/index" class="active">Home</a></li>
               <li><a href="/course">Course</a></li>
-              <li><a href="/profile">Profile <img src= '<%=userprofile%>'  alt=""></a></li>
+              <li><a href="/profile">Profile <img src='<%=userprofile%>' alt=""></a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
             </a>
-            <!-- ***** Menu End ***** -->
           </nav>
         </div>
       </div>
     </div>
   </header>
-  <!-- ***** Header Area End ***** -->
 
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
 
-          <!-- ***** Banner Start ***** -->
           <div class="main-banner">
             <div class="row">
               <div class="col-lg-7">
                 <div class="header-text">
                   <h6>Welcome To <em>FitGym</em></h6>
                   <h4><em>#Explore</em> Our Facilities and Gym</h4>
-                  <!-- <div class="main-button">
-                    <a href="#">Browse Now</a>
-                  </div> -->
+                 
                 </div>
               </div>
             </div>
           </div>
-          <!-- ***** Banner End ***** -->
 
-          <!-- ***** Most Popular Start ***** -->
           <div class="most-popular">
             <div class="row">
               <div class="col-lg-12">
@@ -111,12 +93,11 @@ https://templatemo.com/tm-579-cyborg-gaming
                   <h4><em>Most Popular</em> Courses Right Now</h4>
                 </div>
                 <div class="row" id="userGig">
-
-                  <!-- <div class="col-lg-12">
-                    <div class="main-button">
-                      <a href="#">Discover More</a>
-                    </div>
-                  </div> -->
+                </div>
+                <div class="main-button">
+                  <a onclick="loadAllgig()" style="cursor: pointer; color: rgb(72, 72, 72);">
+                    Load All
+                  </a>
                 </div>
               </div>
             </div>
@@ -146,8 +127,6 @@ https://templatemo.com/tm-579-cyborg-gaming
   </footer>
 
 
-  <!-- Scripts -->
-  <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
@@ -156,7 +135,10 @@ https://templatemo.com/tm-579-cyborg-gaming
   <script src="js/tabs.js"></script>
   <script src="js/popup.js"></script>
   <script src="js/custom.js"></script>
- <script src="js/index.js"></script>
+  <script src="js/index.js"></script>
+  <script>
+   
+  </script>
 
 </body>
 

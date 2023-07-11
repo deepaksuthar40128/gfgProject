@@ -42,7 +42,7 @@ app.post('/addgig', checkAuth, upload.array('photos', 12), async (req, res) => {
 			Name: req.body.name,
 			price: price,
 			discription: desc,
-			Trainer: (await trainer.findOne({ email: req.user.email }))._id,
+			Trainer: (await Trainer.findOne({ email: req.user.email }))._id,
 		})
 		await newGig.save();
 		res.redirect('/profile');
@@ -68,7 +68,7 @@ app.get('/addtrainer', async (req, res) => {
 
 app.post('/trainer/register', checkAuth, upload.single('image'), async (req, res) => {
 	try {
-		const { experiance, gender, speslity, achivement, medical } = req.body;
+		const { experiance, gender, speslity, achivement, medical,username } = req.body;
 		const usr=await user.findById(req.user._id);
 		if(!usr){
 			res.status(404).json({
@@ -87,6 +87,7 @@ app.post('/trainer/register', checkAuth, upload.single('image'), async (req, res
 			speslity: speslity,
 			achivement: achivement,
 			medical: medical,
+			username:username,
 		})
 		trainer = await trainer.save();
 		usr.isTrainer=true;
@@ -124,7 +125,8 @@ app.post('/modifyProfile',upload.single('image'), async (req, res) => {
 		  experiance: req.body.experiance,
 		  speslity: req.body.speslity,
 		  achivement: req.body.achivement,
-		  phone: req.body.phone
+		  phone: req.body.phone,
+		  username:req.body.username,
 		});
 		await trainer.save();
 		await usr.findByIdAndUpdate(req.user._id, {
@@ -142,6 +144,9 @@ app.post('/modifyProfile',upload.single('image'), async (req, res) => {
 	}
   });
   
+  app.get('/tranerProfile/:id',async(req,res)=>{
+	
+  })
   app.use(undirectedRoutes);
   
   module.exports = app;

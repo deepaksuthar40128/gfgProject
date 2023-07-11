@@ -31,7 +31,6 @@ const loadAllgig = () => {
 		let main_div = document.getElementById('main_courses');
 		main_div.innerHTML ='';
 		gigs.forEach(gig => {
-			// console.log(`onclick="location.replace('/details/${gig._id}')"`)
 			main_div.innerHTML += `<div class="col-lg-3 col-sm-6" onclick="window.open('/details?gigId=${gig._id}','_self')">
                                     <div class="item" >
                                       <div class="thumb">

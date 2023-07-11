@@ -1,3 +1,33 @@
 .item:hover {
   background-color: #e75e8d;
 }
+
+#searchText:focus {
+  border-radius: 23px 23px 0px 0px !important;
+  outline: none !important;
+  width: 100%;
+}
+
+#search{
+  max-width: 300px;
+}
+.Box {
+  display: none;
+  padding: 10px;
+  background-color: #27292a;
+  width: 100%;
+  border-radius: 0 0 23px 23px;
+}
+
+#searchText:focus .Box {
+  display: block;
+}
+
+.Box a p {
+  color: rgb(153, 153, 153);
+  margin: 5px 0px 5px 5px; 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  width: 100%;
+  white-space: nowrap;
+}
