@@ -65,10 +65,6 @@
 	margin: 10px 0;
 }
 
-.img-container::-webkit-scrollbar {
-	display: none;
-}
-
 .img span {
 	position: absolute;
 	right: 17px;

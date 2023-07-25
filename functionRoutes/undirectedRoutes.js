@@ -397,7 +397,13 @@ app.get('/searchGig/', async (req, res) => {
 							}
 						},
 						{
-							'Name': "Fortune"
+							'Name':  {
+								'$elemMatch': {
+									'$in': [
+										new RegExp(req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i')
+									]
+								}
+							}
 						}
 					]
 
