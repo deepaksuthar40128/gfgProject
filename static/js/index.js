@@ -36,6 +36,7 @@ window.onload = async () => {
 const loadAllgig=async()=>{
 	let data = await myGET('GET', '/limitedGig');
 	let gigDiv = document.getElementById('userGig');
+	gigDiv.innerHTML="";
 	data.map((item) => {
 		gigDiv.innerHTML += ` <div class="col-lg-3 col-sm-6" style="width: 28%;">
 	  <div class="item">
