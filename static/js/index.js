@@ -1,4 +1,4 @@
-// 	  <h4>'${item.Trainer?.username}'<br><span>Shop Now</span></h4>
+let cnt;
 
 document.getElementById('searchText').addEventListener('focus', () => {
 	document.getElementsByClassName('Box')[0].style.display = 'block'
@@ -10,10 +10,11 @@ document.getElementById('searchText').addEventListener('focus', () => {
   })
 
 window.onload = async () => {
+	cnt=1;
 	let data = await myGET('GET', '/gigs');
 	let gigDiv = document.getElementById('userGig');
 	data.map((item) => {
-		gigDiv.innerHTML += ` <div class="col-lg-3 col-sm-6" style="width: 28%;">
+		gigDiv.innerHTML += ` <div class="col-lg-3 col-sm-6" style="width: 33.3%;">
 	  <div class="item">
 	  <div><img src="${item.Images[0]}" alt=""></div>
 	  <div class="gigChk">
@@ -34,9 +35,12 @@ window.onload = async () => {
 }
 
 const loadAllgig=async()=>{
-	let data = await myGET('GET', '/limitedGig');
+	cnt=cnt+1;
+	let data = await myGET('GET', `/limitedGig?cnt=${cnt}`);
 	let gigDiv = document.getElementById('userGig');
-	gigDiv.innerHTML="";
+	if(!data){
+		return;
+	}
 	data.map((item) => {
 		gigDiv.innerHTML += ` <div class="col-lg-3 col-sm-6" style="width: 28%;">
 	  <div class="item">
@@ -90,7 +94,6 @@ const searchResult = async (search) => {
 	if (search.length) { 
 		let data = await myGET('GET', `/searchGig/?search=${search}`);
 		let searhBox=document.getElementsByClassName('Box')[0];
-		console.log(data);
 		searhBox.innerHTML=''
 		 data.map((item)=>{
 			if(item.type=="gig"){

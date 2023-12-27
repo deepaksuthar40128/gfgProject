@@ -59,12 +59,18 @@ app.get('/alluserGigs', checkAuth, async (req, res) => {
 })
 
 app.get('/buy/:id', checkAuth, async (req, res) => {
-	data = await user.findByIdAndUpdate(req.user._id, {
-		$push: {
-			gigs: req.params.id,
-		}
-	}, { new: true })
-	res.json(data)
+	try {
+		data = await user.findByIdAndUpdate(req.user._id, {
+			$push: {
+				gigs: req.params.id,
+			}
+		}, { new: true })
+		res.json(data)
+	} catch (error) {
+        res.status(500).json({
+			message:"Internal Server Error",
+		})
+	}
 })
 
 
@@ -84,9 +90,9 @@ app.get('/details/:id', checkAuth, async (req, res) => {
 	}
 })
 
-app.get('/recomendGigs', async (req, res) => {
+app.post('/recomendGigs', async (req, res) => {
 	try {
-		let Tags2 = req.query.tags.split(',');
+		let Tags2 = req.body.tags.split(',');
 
 		data = await Promise.all(Tags2.map(async tag => {
 			data2 = await Gigs.aggregate([
@@ -139,9 +145,6 @@ app.get('/gig/:id', async (req, res) => {
 })
 
 
-app.get('/payment', async (req, res) => {
-	res.render('payment');
-})
 
 app.post('/rating/:id', async (req, res) => {
 	try {
@@ -173,7 +176,7 @@ app.get('/gigs', async (req, res) => {
 		let gigTag = new Set();
 
 		if (!usr.gigs.length) {
-			let gig = await Gigs.find().limit(4);
+			let gig = await Gigs.find().limit(3);
 			return res.status(200).json(gig);
 		} else {
 			await Promise.all(usr.gigs.map(async (item) => {
@@ -233,13 +236,13 @@ app.get('/gigs', async (req, res) => {
 });
 
 
-app.get('/limitedGig', async (req, res) => {
+app.get('/limitedGig/', async (req, res) => {
 	try {
 		let usr = await user.findById(req.user._id);
 		let gigTag = new Set();
-
+		let cnt = req.query.cnt;
 		if (!usr.gigs.length) {
-			let gig = await Gigs.find().limit(2);
+			let gig = await Gigs.find().skip((parseInt(cnt) - 1) * 3).limit(3);
 			return res.status(200).json(gig);
 		} else {
 			await Promise.all(usr.gigs.map(async (item) => {
@@ -288,9 +291,15 @@ app.get('/limitedGig', async (req, res) => {
 		}
 
 		let filterGig = [];
+		let oldCnt = (parseInt(cnt) - 1) * 3;
+		let oldGig = await Gigs.find().limit(oldCnt);
+		let queryCnt = 0;
 		await Promise.all(sortable.map(async (item) => {
-			let gig = await Gigs.findById(item).populate('Trainer');
-			filterGig.push(gig);
+			if ((oldGig._id != item) && (queryCnt < 3)) {
+				queryCnt++;
+				let gig = await Gigs.findById(item).populate('Trainer');
+				filterGig.push(gig);
+			}
 		}));
 		res.json(filterGig);
 	} catch (error) {
@@ -336,7 +345,7 @@ app.get('/featureGigs', async (req, res) => {
 					$match: {
 						Tags: {
 							$elemMatch: {
-								$eq: tag
+								$eq: tag,
 							}
 						}
 					}
@@ -397,7 +406,7 @@ app.get('/searchGig/', async (req, res) => {
 							}
 						},
 						{
-							'Name':  {
+							'Name': {
 								'$elemMatch': {
 									'$in': [
 										new RegExp(req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i')
@@ -426,7 +435,7 @@ app.get('/searchGig/', async (req, res) => {
 		let trainers = await trainer.aggregate([
 			{
 				$match: {
-					"username":new RegExp(req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i')
+					"username": new RegExp(req.query.search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&'), 'i')
 				}
 			}, {
 				$project: {
@@ -449,6 +458,7 @@ app.get('/searchGig/', async (req, res) => {
 		res.status(500).json(error);
 	}
 });
+
 
 
 module.exports = app;

@@ -2,6 +2,7 @@ const express = require('express');
 const Trainer = require('../model/trainer.js')
 const Gig = require('../model/gigs.js')
 const app = express();
+const sharp=require('sharp');
 const multer = require('multer');
 const gigs = require('../model/gigs.js');
 const undirectedRoutes = require('./undirectedRoutes.js');
@@ -24,32 +25,93 @@ const storage = multer.diskStorage({
 		cb(null, `gfg${Date.now() + file.originalname}`);
 	},
 });
+
 const upload = multer({ storage: storage });
 
 app.post('/addgig', checkAuth, upload.array('photos', 12), async (req, res) => {
 	try {
 		const { price, tags, desc } = req.body;
-		let Tags = tags.split(',');
-		let files = req.files;
+		const Tags = tags.split(',');
+		const files = req.files;
 		let file_names = [];
+
+		for (const file of files) {
+			const compressedImageBuffer = await compressAndResizeImage(file.path);
+			const filename = `gfg${Date.now() + file.originalname}`;
+			const filePath = `./static/uploads/${filename}`;
+			await sharp(compressedImageBuffer).toFile(filePath);
+
+			file_names.push(filePath);
+		}
+		
 		file_names =
-			files.map((file) => {
-				return `./uploads/${file.filename}`
+		file_names.map((file) => {
+			let subFile=file.substring(8)
+				return `.${subFile}`
 			});
-		let newGig = new gigs({
+
+		const newGig = new gigs({
 			Tags: Tags,
 			Images: file_names,
 			Name: req.body.name,
 			price: price,
 			discription: desc,
 			Trainer: (await Trainer.findOne({ email: req.user.email }))._id,
-		})
+		});
+
 		await newGig.save();
 		res.redirect('/profile');
 	} catch (err) {
-		console.log(err);
+		console.error(err);
+		res.status(500).send('Internal Server Error');
 	}
-})
+});
+
+// Function to compress and resize image
+const compressAndResizeImage = async (filename) => {
+	try {
+		const maxWidth = 500;
+		let targetWidth = 100, targetHeight = 100;
+		let imgmaintaineRatio = true;
+
+		if (imgmaintaineRatio) {
+			const [originalWidth, originalHeight] = await calculateImageDimensions(filename);
+			const originalAspectRatio = originalWidth / originalHeight;
+			if (originalAspectRatio > 1) {
+				targetWidth = maxWidth;
+				targetHeight = Math.floor(maxWidth / originalAspectRatio);
+			} else {
+				targetHeight = maxWidth;
+				targetWidth = Math.floor(maxWidth * originalAspectRatio);
+			}
+		}
+
+		return await sharp(filename)
+			.resize(targetWidth, targetHeight)
+			.toBuffer();
+	} catch (error) {
+		console.error('Error compressing and resizing image:', error);
+		throw error;
+	}
+};
+
+// Function to calculate image dimensions
+const calculateImageDimensions = async (filename) => {
+	try {
+		const image = sharp(filename);
+		const metadata = await image.metadata();
+		const orientation = metadata.orientation || 1;
+		let { width, height } = metadata;
+		if (orientation >= 5 && orientation <= 8) {
+			[width, height] = [height, width];
+		}
+		return [width, height];
+	} catch (error) {
+		console.error('Error calculating image dimensions:', error);
+		throw error;
+	}
+};
+
 app.get('/addgig', checkAuth, async (req, res) => {
 	let data = await Trainer.findOne({ email: req.user.email });
 	if (!data) {
@@ -68,11 +130,11 @@ app.get('/addtrainer', async (req, res) => {
 
 app.post('/trainer/register', checkAuth, upload.single('image'), async (req, res) => {
 	try {
-		const { experiance, gender, speslity, achivement, medical,username } = req.body;
-		const usr=await user.findById(req.user._id);
-		if(!usr){
+		const { experiance, gender, speslity, achivement, medical, username } = req.body;
+		const usr = await user.findById(req.user._id);
+		if (!usr) {
 			res.status(404).json({
-				message:"User not Found"
+				message: "User not Found"
 			})
 		}
 		const oldTrainer = await Trainer.findOne({ email: req.user.email });
@@ -87,10 +149,10 @@ app.post('/trainer/register', checkAuth, upload.single('image'), async (req, res
 			speslity: speslity,
 			achivement: achivement,
 			medical: medical,
-			username:username,
+			username: username,
 		})
 		trainer = await trainer.save();
-		usr.isTrainer=true;
+		usr.isTrainer = true;
 		await usr.save();
 		await user.findByIdAndUpdate(req.user._id, {
 			profile: `./uploads/${req.file.filename}`
@@ -102,13 +164,13 @@ app.post('/trainer/register', checkAuth, upload.single('image'), async (req, res
 	}
 })
 
-app.get('/editProfile',async(req,res)=>{
+app.get('/editProfile', async (req, res) => {
 	try {
-		const usr=await user.findById(req.user._id);
-		if(usr.isTrainer){
-            res.render('editProfile',{Traner:true,person:await Trainer.findOne({email: req.user.email})})
-		}else{
-			res.render('editProfile',{Traner:false,person:req.user});
+		const usr = await user.findById(req.user._id);
+		if (usr.isTrainer) {
+			res.render('editProfile', { Traner: true, person: await Trainer.findOne({ email: req.user.email }) })
+		} else {
+			res.render('editProfile', { Traner: false, person: req.user });
 		}
 	} catch (error) {
 		console.log(error)
@@ -116,38 +178,37 @@ app.get('/editProfile',async(req,res)=>{
 	}
 })
 
-app.post('/modifyProfile',upload.single('image'), async (req, res) => {
+app.post('/modifyProfile', upload.single('image'), async (req, res) => {
 	try {
-	  let usr = await user.findById(req.user._id);
-	  if (usr.isTrainer) {
-		let trainer = await Trainer.findOne({ email: req.user.email });
-		await trainer.updateOne({
-		  experiance: req.body.experiance,
-		  speslity: req.body.speslity,
-		  achivement: req.body.achivement,
-		  phone: req.body.phone,
-		  username:req.body.username,
-		});
-		await trainer.save();
-		await usr.findByIdAndUpdate(req.user._id, {
-			profile: `./uploads/${req.file.filename}`
-		});
-	  } else {
-		usr.username = req.body.username;
-		usr.profile = `./uploads/${req.file.filename}`;
-		await usr.save();
-	  }
-	  res.redirect('/auth');
+		let usr = await user.findById(req.user._id);
+		if (usr.isTrainer) {
+			let trainer = await Trainer.findOne({ email: req.user.email });
+			await trainer.updateOne({
+				experiance: req.body.experiance,
+				speslity: req.body.speslity,
+				achivement: req.body.achivement,
+				phone: req.body.phone,
+				username: req.body.username,
+			});
+			await trainer.save();
+			await usr.findByIdAndUpdate(req.user._id, {
+				profile: `./uploads/${req.file.filename}`
+			});
+		} else {
+			usr.username = req.body.username;
+			usr.profile = `./uploads/${req.file.filename}`;
+			await usr.save();
+		}
+		res.redirect('/profile');
 	} catch (error) {
-	  console.log(error);
-	  res.status(500).render('error'); 
+		console.log(error);
+		res.status(500).render('error');
 	}
-  });
-  
-  app.get('/tranerProfile/:id',async(req,res)=>{
-	
-  })
-  app.use(undirectedRoutes);
-  
-  module.exports = app;
-  
+});
+
+app.get('/tranerProfile/:id', async (req, res) => {
+
+})
+app.use(undirectedRoutes);
+
+module.exports = app;

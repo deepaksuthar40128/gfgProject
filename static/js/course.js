@@ -7,7 +7,7 @@ window.onload = async () => {
 		<img src="${item.Images[0]}" alt="" class="templatemo-item">
 		<h4>${item.Name}</h4>
 		<span><i class="fa fa-star" style="color: yellow;"></i>${item.Rating?item.Rating :'unrated'}</span>
-		<span><i class="fa fa-download" style="color: #ec6090;"></i>5</span>
+		<span><i class="fas fa-shopping-bag"></i> ${item.NumberRates?item.NumberRates:0}</span>
 		<div class="download">
 		  <a href="/details?gigId=${item._id}" class="frontLink">shop Now</a>
 		</div>
@@ -27,8 +27,8 @@ window.onload = async () => {
                     </div>
                     <<h4>${item.Name}</h4> 
                     <ul>
-                      <li><i class="fa fa-star"></i>${item.Rating?item.Rating:'unrated'}</li>
-                      <<li><i class="fa fa-download"></i>${item.NumberRates?item.NumberRates:0}</li>
+                      <li><i class="fa fa-star"></i> ${item.Rating?item.Rating:'unrated'}</li>
+                      <li><i class="fas fa-shopping-bag"></i> ${item.NumberRates?item.NumberRates:0}</li>
                     </ul>
                   </div>`
 	})
@@ -45,7 +45,7 @@ const loadAllCourse=async()=>{
 		<img src="${item.Images[0]}" alt="" class="templatemo-item">
 		<h4>${item.Name}</h4>
 		<span><i class="fa fa-star" style="color: yellow;"></i>${item.Rating?item.Rating :'unrated'}</span>
-		<span><i class="fa fa-download" style="color: #ec6090;"></i>5</span>
+		<span><i class="fas fa-shopping-bag"></i> ${item.NumberRates?item.NumberRates:0}</span>
 		<div class="download">
 		  <a href="/details" class="frontLink">shop Now</a>
 		</div>
@@ -60,7 +60,6 @@ const myGET = (method, url, data) => {
 			XML.open(method, url);
 			XML.setRequestHeader('Content-Type', 'application/json');
 			XML.onload = (e) => {
-				console.log(e.target.response);
 				let data = JSON.parse(e.target.response);
 				resolve(data);
 			}

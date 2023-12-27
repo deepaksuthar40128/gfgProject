@@ -7,6 +7,7 @@ require('./passportLocal')(passport);
 require('./googleAuth')(passport); 
 const userRoutes = require('./accountRoutes');
 const trainerRoutes = require('../functionRoutes/trainer');
+const paymentRoutes=require('../functionRoutes/payment')
 
 function checkAuth(req, res, next) {
     if (req.isAuthenticated()) {
@@ -41,7 +42,6 @@ app.get('/auth', async (req, res) => {
 })
 app.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        // failureRedirect: '/user?mode=login',
         failureRedirect: '/auth',
         successRedirect: '/index',
         failureFlash: true,
@@ -53,7 +53,6 @@ app.post('/signup', async (req, res) => {
     let data = await user.findOne({ email: req.body.email });
     if (data) {
         req.flash('error_messages', "user already exist");
-        // res.redirect('/user?mode=login');
         res.redirect('/auth');
     }
     else {
@@ -126,5 +125,5 @@ app.get('/help', (req, res) => {
 
 app.use(userRoutes);
 app.use(trainerRoutes);
-
+app.use(paymentRoutes);
 module.exports = app;

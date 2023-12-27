@@ -936,6 +936,9 @@ Most Popular Style
 
 .most-popular .item img {
   border-radius: 23px;
+    width: 16rem;
+    height: 11rem;
+    margin-left: 33px;
 }
 
 .most-popular .item h4 {
@@ -1109,6 +1112,9 @@ Featured Games Style
 
 .featured-games .item img {
   border-radius: 23px;
+  width: 20rem;
+  height: 20rem;
+
 }
 
 .featured-games .item h4 {
@@ -1127,7 +1133,7 @@ Featured Games Style
 
 .featured-games .item ul {
   float: right;
-  margin-top: 20px;
+
 }
 
 .featured-games .item ul li {

@@ -70,6 +70,14 @@
   </header>
 
   <div class="container">
+    <% if( success_messages !="" ){ %>
+      <div class="error" role="alert" style="margin-top: 88px; background-color: #50be77;">
+        <strong> Success </strong>
+        <%= success_messages %>
+          <button type="button" onclick="document.getElementsByClassName('error')[0].remove()"
+            class="btn-close">x</button>
+      </div>
+      <% } %>
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
@@ -114,7 +122,6 @@
           <p>Copyright ©<a href="#">TEAM_NAME</a> Company. All rights reserved.
             <br>
             Contact Us :
-            <!-- add social media links here -->
             <i class="fa-brands fa-instagram fa-beat fa-lg " style="color: #da17de; padding: 0px 5px 0px 30px;"></i>
             <i class="fa-brands fa-facebook fa-beat fa-lg" style="color: #3b5998; padding: 0px 5px;"></i>
             <i class="fa-brands fa-twitter fa-beat fa-lg" style="color: #1da1f2; padding: 0px 5px;"></i>
