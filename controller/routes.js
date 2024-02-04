@@ -71,7 +71,7 @@ app.post('/signup', async (req, res) => {
                         // Tags:
                     })
                     newData = await newData.save();
-                    // res.redirect('/user?mode=login');
+                    req.flash('success_messages', "Please login again !");
                     res.redirect('/auth');
                 })
             });

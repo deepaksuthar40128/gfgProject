@@ -37,7 +37,17 @@
 									class="btn-close">x</button>
 						</div>
 						<% } %>
+							<% if( success_messages !="" ){ %>
+								<div class="error" role="alert" style="margin-top: 88px; background-color: #50be77;">
+									<strong> Success </strong>
+									<%= success_messages %>
+										<button type="button"
+											onclick="document.getElementsByClassName('error')[0].remove()"
+											class="btn-close">x</button>
+								</div>
+								<% } %>
 		</div>
+
 		<div class="main">
 			<input type="checkbox" id="chk" aria-hidden="true">
 			<div class="signup">
@@ -48,7 +58,7 @@
 					<input type="password" name="password" placeholder="Password" required>
 					<button>Sign up</button>
 				</form>
-				<a href="/google"><button style="background-color: red;" type="submit" >Google</button></a>
+				<a href="/google"><button style="background-color: red;" type="submit">Google</button></a>
 			</div>
 
 			<div class="login">
@@ -58,12 +68,13 @@
 					<input type="password" name="password" placeholder="Password" required>
 					<button>Login</button>
 				</form>
-				<a href="/google"><button style="background-color: red;" type="submit" >Google</button></a>
+				<a href="/google"><button style="background-color: red;" type="submit">Google</button></a>
 			</div>
 		</div>
 	</body>
-<script>
-</script>
+	<script>
+	</script>
+
 	</html>
 </body>
 
